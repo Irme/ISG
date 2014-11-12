@@ -8,6 +8,7 @@ public class Board {
 	public static int board [][];
 	static ArrayList<Integer> 	moves = new ArrayList<Integer>();
 	public static int player = 1;
+	static int  coor [] = new int [2];
 	public Board(){
 		//TODO : constructor
 		board = new int [sizey][sizex];
@@ -49,101 +50,105 @@ public class Board {
 
 	public static void Move(int x, int y){
 		moves.clear();
-		int xnew, ynew;
-		int sel = 0;
 		if(player == 2){
 			System.out.println("Player2");
 			System.out.println(x + " " + y);
 			if (board[x][y] == 2){
 				System.out.println("valid selection");
 				if(x >= 2 && y < 7){
-					xnew = x - 2;
-					ynew = y + 1;
-					if (board[xnew][ynew] != 2){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew1 = x - 2;
+					int ynew1 = y + 1;
+					if (board[xnew1][ynew1] != 2){
+						moves.add(xnew1);
+						moves.add(ynew1);
 					}
 
 				}
 				if(x >= 1 && y < 6){
-					xnew = x - 1;
-					ynew = y + 2;
-					if (board[xnew][ynew] != 2){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew2 = x - 1;
+					int ynew2 = y + 2;
+					if (board[xnew2][ynew2] != 2){
+						moves.add(xnew2);
+						moves.add(ynew2);
 					}
 
 				}
 				if(x <= 5 && y < 7){
-					xnew = x + 2;
-					ynew = y + 1;
-					if (board[xnew][ynew] != 2){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew3 = x + 2;
+					int ynew3 = y + 1;
+					if (board[xnew3][ynew3] != 2){
+						moves.add(xnew3);
+						moves.add(ynew3);
 					}
 
 				}
 				if(x <=6  && y < 6){
-					xnew = x + 1;
-					ynew = y + 2;
-					if (board[xnew][ynew] != 2){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew4 = x + 1;
+					int ynew4 = y + 2;
+					if (board[xnew4][ynew4] != 2){
+						moves.add(xnew4);
+						moves.add(ynew4);
 					}
 
 				}
 
 			}
 
-		} else{ //player == 1
+		} else if (player == 1){ //player == 1
 			if (board[x][y] == 1){
-				System.out.println("Valid selection player 1");
+				System.out.println("Valid selection player 1 " + x + " " + y );
 				if(x >= 2 && y >= 1){
-					xnew = x - 2;
-					ynew = y - 1;
-					if (board[xnew][ynew] != 1){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew5 = x - 2;
+					int ynew5 = y - 1;
+					System.out.println(xnew5 + " " + ynew5);
+					if (board[xnew5][ynew5] != 1){
+						moves.add(xnew5);
+						moves.add(ynew5);
+						
 					}
 				}
 				if(x >= 1 && y >=2){
-					xnew = x - 1;
-					ynew = y - 2;
-					if (board[xnew][ynew] != 1){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew6 = x - 1;
+					int ynew6 = y - 2;
+					System.out.println(xnew6 + " " + ynew6);
+					if (board[xnew6][ynew6] != 1){
+						moves.add(xnew6);
+						moves.add(ynew6);
 					}
 				}
 				if(x < 6 && y >= 1){
-					xnew = x + 2;
-					ynew = y - 1;
-					if (board[xnew][ynew] != 1){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew7 = x + 2;
+					int ynew7 = y - 1;
+					System.out.println(xnew7 + " " + ynew7);
+					if (board[xnew7][ynew7] != 1){
+						moves.add(xnew7);
+						moves.add(ynew7);
 					}
 				}
 				if(x <7  && y >= 2){
-					xnew = x + 1;
-					ynew = y - 2;
-					if (board[xnew][ynew] != 1){
-						moves.add(xnew);
-						moves.add(ynew);
+					int xnew8 = x + 1;
+					int ynew8 = y - 2;
+					System.out.println(xnew8 + " " + ynew8);
+					if (board[xnew8][ynew8] != 1){
+						moves.add(xnew8);
+						moves.add(ynew8);
 					}
 				}
 
 
 			}
 
-		}for (Integer i : moves){
-			System.out.println(i);
 		}
+					for (Integer i : moves){
+					System.out.println(i);
+				}
 
 	}
 
 	public static void Moving(int x, int y, int newx, int newy){
 		board[newx][newy] = board[x][y];
 		board[x][y] = 0;
-		
+
 	}
 	//if ()
 

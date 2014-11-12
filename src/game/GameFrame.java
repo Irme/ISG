@@ -69,8 +69,8 @@ public class GameFrame extends JFrame {
 				db.drawB(g, bk, wk);
 				if(coor[0] != -10)
 					g.drawRect(FX+26*coor[0], FY+26*coor[1], 26, 26);
-				for (int i = 0; i < (Board.moves.size()/2); i++){
-					//g.drawRect(FX+26*Board.moves.get(i), FY+26*Board.moves.get(i+1), 26, 26);
+				for (int i = 0; i < (Board.moves.size()); i = i+2){
+					g.drawRect(FX+26*Board.moves.get(i), FY+26*Board.moves.get(i+1), 26, 26);
 				}
 				repaint();
 
@@ -108,6 +108,7 @@ public class GameFrame extends JFrame {
 				gottenY = e.getY();
 				
 				coor = db.highlight(gottenX, gottenY);
+				Board.coor = coor;
 				//if (coor[0] != -10 )
 				//Board.Move(coor[0], coor[1]);
 			}

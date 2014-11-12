@@ -103,13 +103,13 @@ public class GameFrame extends JFrame {
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(e.getX() + " " +e.getY() );
+				//System.out.println(e.getX() + " " +e.getY() );
 				gottenX = e.getX();
 				gottenY = e.getY();
 				
 				coor = db.highlight(gottenX, gottenY);
-				if (coor[0] != -10 )
-				Board.Move(coor[1], coor[0]);
+				//if (coor[0] != -10 )
+				//Board.Move(coor[0], coor[1]);
 			}
 		});
 		canvas.getMouseListeners();

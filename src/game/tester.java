@@ -1,22 +1,67 @@
 package game;
 
 import java.io.IOException;
+import java.util.Scanner;
+
 
 public class tester {
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
+
 	public static void main(String[] args) throws IOException {
-		int player = 1;
+		Scanner in = new Scanner(System.in);
 		GameFrame frame = new GameFrame();
+		frame.setAlwaysOnTop( true );
 		Board board = new Board();
-		//while(board.isFinished() == 0){
-		System.out.println("Player " + player + " is playing");
-		board.printBoard();
-		player = (player+1)%2;
-		//}
-		frame.repaint();
+
+
+
+		while(board.isFinished() == 0){
+			boolean validmove = false;
+			int xtemp = 0;
+			int ytemp = 0;
+			while(!validmove){
+				System.out.println("Player " + Board.player + " is playing");
+				System.out.println("Please select a piece to move:");
+				xtemp = in.nextInt();
+				ytemp = in.nextInt();
+				if (Board.board[xtemp][ytemp] == Board.player)
+					validmove =true;
+			}
+			Board.Move(xtemp, ytemp);
+
+
+			System.out.println("Possible moves are: ");
+			for(int i = 0; i < Board.moves.size()/2; i ++){
+				System.out.println(Board.moves.get(i) + " " +Board.moves.get(i+1));
+			}
+			System.out.println("Please select one");
+			boolean validselec = false;
+			int xnew = 0;
+			int ynew = 0;
+			while(!validselec){
+				
+				xnew = in.nextInt();
+				ynew = in.nextInt();
+				for(int i = 0; i < Board.moves.size()/2; i ++){
+					if(Board.moves.get(i) == xnew && Board.moves.get(i+1) == ynew){
+						Board.Moving(xtemp, ytemp, xnew, ynew);
+						validselec = true;
+					}
+				}
+				System.out.println("Invalid move, please try again.");
+				
+					
+				
+			} 
+			//Board.Moving(xtemp, ytemp, xnew, ynew);
+			board.printBoard();
+			Board.player = (Board.player%2+1);
+			frame.repaint();
+		}
+		System.out.println("Game over");
 
 		// TODO Auto-generated method stub
 

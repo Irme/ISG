@@ -9,6 +9,8 @@ public class Board {
 	static ArrayList<Integer> 	moves = new ArrayList<Integer>();
 	public static int player = 1;
 	static int  coor [] = new int [2];
+	static boolean firstClick = false;
+	static boolean secondClick = false;
 	public Board(){
 		//TODO : constructor
 		board = new int [sizey][sizex];

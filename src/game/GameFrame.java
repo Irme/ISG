@@ -68,6 +68,7 @@ public class GameFrame extends JFrame {
 				g.drawImage(chessboard, FX, FY, null);//Actually drawing the image
 				db.drawB(g, bk, wk);
 				if(coor[0] != -10)
+					
 					g.drawRect(FX+26*coor[0], FY+26*coor[1], 26, 26);
 				for (int i = 0; i < (Board.moves.size()); i = i+2){
 					g.drawRect(FX+26*Board.moves.get(i), FY+26*Board.moves.get(i+1), 26, 26);
@@ -102,13 +103,14 @@ public class GameFrame extends JFrame {
 		setVisible(true);
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public synchronized void mouseClicked(MouseEvent e) {
 				//System.out.println(e.getX() + " " +e.getY() );
 				gottenX = e.getX();
 				gottenY = e.getY();
-				
 				coor = db.highlight(gottenX, gottenY);
 				Board.coor = coor;
+		
+				
 				//if (coor[0] != -10 )
 				//Board.Move(coor[0], coor[1]);
 			}

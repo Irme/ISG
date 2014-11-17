@@ -6,16 +6,18 @@ import java.util.List;
 public class Tree<T> {
     private Node<T> root;
 
-    public Tree(ArrayList<Integer> rootData) {
+    private ValMove vm = new ValMove();
+    
+    public Tree(ValMove rootData) {
         root = new Node<T>();
-        root.setMoves(rootData);
         root.setChildren(new ArrayList<Node<T>>());
     }
 
     public static class Node<T> {
         private ArrayList<Integer> moves = new ArrayList<Integer>();
         private int [][] state;
-        private int score;
+        private int score = -10;
+        private ValMove valmov = new ValMove();
         private ArrayList<Node<T>> children = new ArrayList<Node<T>>();
         
         public Node(){
@@ -25,6 +27,7 @@ public class Tree<T> {
         public Node(int [][] state){
         	this.state = state;
         	this.moves = Board.getAllMoves(state);
+        	valmov.setScore(score);
         }
 		public List<Node<T>> getChildren() {
 			return children;
@@ -48,6 +51,22 @@ public class Tree<T> {
 
 		public void setState(int [][] state) {
 			this.state = state;
+		}
+
+		public int getScore() {
+			return valmov.getScore();
+		}
+
+		public void setScore(int score) {
+			valmov.setScore(score);
+		}
+
+		public ValMove getValmov() {
+			return valmov;
+		}
+
+		public void setValmov(ValMove valmov) {
+			this.valmov = valmov;
 		}
     }
 }

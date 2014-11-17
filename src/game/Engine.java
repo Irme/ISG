@@ -1,6 +1,9 @@
 package game;
 
+import game.Tree.Node;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Engine {
@@ -15,37 +18,30 @@ public class Engine {
 		frame.setAlwaysOnTop( true );
 		Board board = new Board();
 		boolean validselec = false;
+		Minimax mini = new Minimax();
 
 		
 
 
 		while(board.isFinished() == 0){
 			boolean validmove = false;
-
 			int xtemp = 0;
 			int ytemp = 0;
+			if(Board.player == 1){
 			while(!validmove){
 				System.out.println("Player " + Board.player + " is playing");
 				System.out.println("Please select a piece to move:");
-				
-
 					xtemp = in.nextInt();
 					ytemp = in.nextInt();
-
-
-				
 				if (Board.board[xtemp][ytemp] == Board.player)
 					validmove =true;
 			}
 			Board.Move(xtemp, ytemp);
-
-
 			System.out.println("Possible moves are: ");
 			for(int i = 0; i < Board.moves.size(); i = i+2){
 				System.out.println(Board.moves.get(i) + " " +Board.moves.get(i+1));
 			}
 			System.out.println("Please select one");
-			
 			int xnew = 0;
 			int ynew = 0;
 			while(!validselec){
@@ -57,11 +53,19 @@ public class Engine {
 						validselec = true;
 					}
 				}
-				//System.out.println("Invalid move, please try again.");
-				
-					
-				
 			} 
+			} else {
+				//ArrayList<Integer> temp3 = Board.getAllMoves(Board.board);
+				//System.out.println(temp3.size());
+				int [] temp = new int [4];
+				Node<Integer> root = new Node<Integer>();
+				root.setState(Board.board);
+				System.out.println("Minimax");
+				ValMove temp2 = mini.minimax(false, root, 3);
+						temp = temp2.getMove();
+				System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+				Board.Moving(temp[0], temp[1], temp[2], temp[3]);
+			}
 			validselec= false;
 			//Board.Moving(xtemp, ytemp, xnew, ynew);
 			board.printBoard();

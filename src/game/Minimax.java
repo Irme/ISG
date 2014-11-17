@@ -5,36 +5,38 @@ import game.Tree.Node;
 public class Minimax {
 
 	private double bestValue;
+	
 	public double minimax(boolean max, Node<Double> node, int depth){
 		if (depth == 0){
-				return evalFunc(node.getData());
+				return 0;
 		}
 		//System.out.println(node.getData());
 		if (max){ //Maximising player
-			if(node.getData() == null){
+			if(node.getMoves() == null){
 				bestValue = Double.MIN_VALUE;
-				for(Node n : node.getChildren()){
+				for(int i = 0; i < node.getMoves().size(); i = i + 2){
 					//System.out.println("One ply deeper");
-					bestValue = Math.max(bestValue,minimax(false,n));
+					Node n = new Node();
+					bestValue = Math.max(bestValue,minimax(false,n, depth-1));
 				}
 				node.setData(bestValue);
 				return bestValue;
 			}
 			else {
-				return node.getData();
+				return evalFunc(node.getData());
 			}
 		}else{ //minimising player
 			if(node.getData() == null){
 				bestValue = Double.MAX_VALUE;
 				for(Node n : node.getChildren()){
 					//System.out.println("One ply deeper");
-					bestValue = Math.min(bestValue, minimax(true,n));
+					bestValue = Math.min(bestValue, minimax(true,n, depth-1));
 				}
 				node.setData(bestValue);
 				return bestValue;
 			}
 			else {
-				return node.getData();
+				return evalFunc(node.getData());
 			}
 
 		}

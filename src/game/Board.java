@@ -3,8 +3,8 @@ package game;
 import java.util.ArrayList;
 
 public class Board {
-	public int sizex = 8;
-	public int sizey = 8;
+	public static int sizex = 8;
+	public static int sizey = 8;
 	public static int board [][];
 	static ArrayList<Integer> 	moves = new ArrayList<Integer>();
 	public static int player = 1;
@@ -41,10 +41,10 @@ public class Board {
 
 	}
 
-	public void printBoard(){
+	public static void printBoard(int [][] b){
 		for(int i = 0; i < sizey; i++){
 			for(int j = 0; j < sizex; j++ ){
-				System.out.print("[" + board[j][i] + "]");
+				System.out.print("[" + b[j][i] + "]");
 			}
 			System.out.println();
 		}

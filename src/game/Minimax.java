@@ -8,8 +8,9 @@ public class Minimax {
 	
 	public ValMove minimax(boolean max, Node<Integer> node, int depth){
 		if (depth == 0){
-				System.out.println("Depth reached");
+				//System.out.println("Depth reached");
 				node.setScore(evalFunc(node.getState()));
+				System.out.println("Returned: " + node.getScore());
 				return node.getValmov();
 		}
 		//System.out.println(node.getData());
@@ -20,8 +21,11 @@ public class Minimax {
 				node.setMoves(Board.getAllMoves(node.getState()));
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
 					System.out.println("One ply deeper");
-					int [][] bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
+					int [][] bo = new int [8][8];
+					bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
 					Node n = new Node<Integer>(bo);
+					node.addChild(n);
+					//Board.printBoard(bo);
 					ValMove temp = new ValMove();
 					bestValue = Math.max(bestValue,minimax(false,n, depth-1).getScore());
 					temp.setScore(bestValue);
@@ -29,6 +33,7 @@ public class Minimax {
 					temp.setMoveY(node.getMoves().get(i+1));
 					temp.setNewMoveX(node.getMoves().get(i+2));
 					temp.setNewMoveY(node.getMoves().get(i+3));
+					n.setValmov(temp);
 				}
 				node.setScore(bestValue);
 				return node.getValmov();
@@ -44,9 +49,9 @@ public class Minimax {
 				System.out.println(node.getMoves().size());
 				bestValue = Integer.MIN_VALUE;
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
-					System.out.println("One ply deeper for min");
-					
+					//System.out.println("One ply deeper for min");
 					int [][] bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
+					Board.printBoard(bo);
 					ValMove temp = new ValMove();
 					Node n = new Node<Integer>(bo);
 					bestValue = Math.min(bestValue,minimax(true,n, depth-1).getScore());

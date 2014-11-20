@@ -3,9 +3,12 @@ package game;
 import game.Tree.Node;
 
 public class Minimax {
-
+	
+	
+	private int [][] miniboard; 
 	private double bestValue;
 	public double minimax(boolean max, Node<Double> node, int depth){
+		miniboard = Board.board;
 		if (depth == 0){
 				return evalFunc(node.getData());
 		}

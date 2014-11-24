@@ -59,7 +59,7 @@ public class Engine {
 				//System.out.println(temp3.size());
 				int [] temp = new int [4];
 				Node<Integer> root = new Node<Integer>();
-				int [][] state = Board.board;
+				int [][] state = board.clone(Board.board);
 				root.setState(state);
 				System.out.println("Minimax");
 				ValMove temp2 = mini.minimax(false, root, 1);
@@ -69,7 +69,7 @@ public class Engine {
 			}
 			validselec= false;
 			//Board.Moving(xtemp, ytemp, xnew, ynew);
-			board.printBoard(Board.board);
+			Board.printBoard(Board.board);
 			Board.player = (Board.player%2+1);
 			frame.repaint();
 		}

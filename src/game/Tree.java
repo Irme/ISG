@@ -26,7 +26,7 @@ public class Tree<T> {
         
         public Node(int [][] state){
         	this.state = state;
-        	this.moves = Board.getAllMoves(state);
+        	//this.moves = Board.getAllMoves(state);
         	valmov.setScore(score);
         }
 		public List<Node<T>> getChildren() {

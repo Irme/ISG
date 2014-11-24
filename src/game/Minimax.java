@@ -5,35 +5,33 @@ import game.Tree.Node;
 public class Minimax {
 
 	private int bestValue;
+	Board b = new Board();
 	
 	public ValMove minimax(boolean max, Node<Integer> node, int depth){
 		if (depth == 0){
-				//System.out.println("Depth reached");
 				node.setScore(evalFunc(node.getState()));
-				System.out.println("Returned: " + node.getScore());
 				return node.getValmov();
 		}
-		//System.out.println(node.getData());
 		if (max){ //Maximising player
 			System.out.println("Max");
 			if(node.getScore() == -10){
 				bestValue = Integer.MIN_VALUE;
+				int [][] bo = b.clone(node.getState());
 				node.setMoves(Board.getAllMoves(node.getState()));
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
 					System.out.println("One ply deeper");
-					int [][] bo = new int [8][8];
 					bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
-					Node n = new Node<Integer>(bo);
+					Node<Integer> n = new Node<Integer>(bo);
 					node.addChild(n);
-					//Board.printBoard(bo);
 					ValMove temp = new ValMove();
-					bestValue = Math.max(bestValue,minimax(false,n, depth-1).getScore());
-					temp.setScore(bestValue);
 					temp.setMoveX(node.getMoves().get(i));
 					temp.setMoveY(node.getMoves().get(i+1));
 					temp.setNewMoveX(node.getMoves().get(i+2));
 					temp.setNewMoveY(node.getMoves().get(i+3));
 					n.setValmov(temp);
+					n.setScore(Math.max(bestValue,minimax(false,n, depth-1).getScore()));
+					bestValue = n.getScore();
+					
 				}
 				node.setScore(bestValue);
 				return node.getValmov();
@@ -42,24 +40,22 @@ public class Minimax {
 				return node.getValmov();
 			}
 		}else{ //minimising player
-			//System.out.println("Min");
 			if(node.getScore() == -10){
-			//	System.out.println("Plied here");
 				node.setMoves(Board.getAllMoves(node.getState()));
-				System.out.println(node.getMoves().size());
+				int bo [][] = b.clone(node.getState());
 				bestValue = Integer.MIN_VALUE;
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
-					//System.out.println("One ply deeper for min");
-					int [][] bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
-					Board.printBoard(bo);
 					ValMove temp = new ValMove();
-					Node n = new Node<Integer>(bo);
-					bestValue = Math.min(bestValue,minimax(true,n, depth-1).getScore());
-					temp.setScore(bestValue);
+					Node<Integer> n = new Node<Integer>();
+					n.setState(Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3)));
+
 					temp.setMoveX(node.getMoves().get(i));
 					temp.setMoveY(node.getMoves().get(i+1));
 					temp.setNewMoveX(node.getMoves().get(i+2));
 					temp.setNewMoveY(node.getMoves().get(i+3));
+					n.setValmov(temp);
+					n.setScore(Math.min(bestValue,minimax(true,n, depth-1).getScore()));
+					bestValue = n.getScore();
 				}
 				node.setScore(bestValue);
 				return node.getValmov();

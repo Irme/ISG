@@ -62,7 +62,7 @@ public class Engine {
 				int [][] state = board.clone(Board.board);
 				root.setState(state);
 				System.out.println("Minimax");
-				ValMove temp2 = mini.minimax(false, root, 1);
+				ValMove temp2 = mini.minimax(false, root, 3, Board.player);
 				temp = temp2.getMove();
 				System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 				Board.Moving(temp[0], temp[1], temp[2], temp[3]);

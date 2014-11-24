@@ -7,7 +7,7 @@ public class Board {
 	public static int sizey = 8;
 	public static int board [][];
 	static ArrayList<Integer> 	moves = new ArrayList<Integer>();
-	static ArrayList<Integer> 	moves2 = new ArrayList<Integer>();
+	ArrayList<Integer> 	moves2 = new ArrayList<Integer>();
 	public static int player = 1;
 	static int  coor [] = new int [2];
 	static boolean firstClick = false;
@@ -139,7 +139,7 @@ public class Board {
 
 	}
 
-	public static ArrayList<Integer> Move2 (int b [][], int x, int y){
+	public  ArrayList<Integer> Move2 (int b [][], int x, int y){
 		moves2.clear();
 		if(player == 2){
 			if (b[x][y] == 2){
@@ -240,12 +240,12 @@ public class Board {
 
 	}
 	//if ()
-	public static ArrayList<Integer> getAllMoves(int b [][]){
+	public ArrayList<Integer> getAllMoves(int b [][],int pl){
 		ArrayList<Integer> allmoves = new ArrayList<Integer>();
 
 		for (int i = 0; i < b.length; i ++ ){
 			for (int j = 0; j < b.length; j ++){
-				if(b[i][j] == Board.player){
+				if(b[i][j] == pl){
 					ArrayList<Integer> temp = new ArrayList<Integer>();
 					temp = Move2(b,i, j);
 					for (int k = 0; k < temp.size();k = k+2 ){

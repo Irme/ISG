@@ -7,6 +7,7 @@ public class Board {
 	public static int sizey = 8;
 	public static int board [][];
 	static ArrayList<Integer> 	moves = new ArrayList<Integer>();
+	static ArrayList<Integer> 	moves2 = new ArrayList<Integer>();
 	public static int player = 1;
 	static int  coor [] = new int [2];
 	static boolean firstClick = false;
@@ -30,7 +31,7 @@ public class Board {
 
 
 	//Return who is finished, zero otherwise
-	public int isFinished(){
+	public static int isFinished(){
 		if(board [0][0] == 1 || board [1][0] == 1|| board [2][0] == 1 || board [3][0] == 1|| board [4][0] == 1|| board [5][0] == 1|| board [6][0] == 1|| board [7][0] == 1 ){
 			return 2;
 		}else if ( board [0][7] == 2 || board [1][7] ==  2 || board [2][7] == 2 || board [3][7] == 2 || board [4][7] == 2 || board [5][7] == 2 || board [6][7] == 2 || board [7][7] == 2){
@@ -51,6 +52,7 @@ public class Board {
 	}
 
 	public static void Move(int x, int y){
+		System.out.println("Moving");
 		moves.clear();
 		if(player == 2){
 			if (board[x][y] == 2){
@@ -138,15 +140,16 @@ public class Board {
 	}
 
 	public static ArrayList<Integer> Move2 (int b [][], int x, int y){
-		moves.clear();
+		System.out.println("Compute moves");
+		moves2.clear();
 		if(player == 2){
 			if (b[x][y] == 2){
 				if(x >= 2 && y < 7){
 					int xnew1 = x - 2;
 					int ynew1 = y + 1;
 					if (b[xnew1][ynew1] != 2){
-						moves.add(xnew1);
-						moves.add(ynew1);
+						moves2.add(xnew1);
+						moves2.add(ynew1);
 					}
 
 				}
@@ -154,8 +157,8 @@ public class Board {
 					int xnew2 = x - 1;
 					int ynew2 = y + 2;
 					if (b[xnew2][ynew2] != 2){
-						moves.add(xnew2);
-						moves.add(ynew2);
+						moves2.add(xnew2);
+						moves2.add(ynew2);
 					}
 
 				}
@@ -163,8 +166,8 @@ public class Board {
 					int xnew3 = x + 2;
 					int ynew3 = y + 1;
 					if (b[xnew3][ynew3] != 2){
-						moves.add(xnew3);
-						moves.add(ynew3);
+						moves2.add(xnew3);
+						moves2.add(ynew3);
 					}
 
 				}
@@ -172,8 +175,8 @@ public class Board {
 					int xnew4 = x + 1;
 					int ynew4 = y + 2;
 					if (b[xnew4][ynew4] != 2){
-						moves.add(xnew4);
-						moves.add(ynew4);
+						moves2.add(xnew4);
+						moves2.add(ynew4);
 					}
 
 				}
@@ -186,8 +189,8 @@ public class Board {
 					int xnew5 = x - 2;
 					int ynew5 = y - 1;
 					if (b[xnew5][ynew5] != 1){
-						moves.add(xnew5);
-						moves.add(ynew5);
+						moves2.add(xnew5);
+						moves2.add(ynew5);
 
 					}
 				}
@@ -195,24 +198,24 @@ public class Board {
 					int xnew6 = x - 1;
 					int ynew6 = y - 2;
 					if (b[xnew6][ynew6] != 1){
-						moves.add(xnew6);
-						moves.add(ynew6);
+						moves2.add(xnew6);
+						moves2.add(ynew6);
 					}
 				}
 				if(x < 6 && y >= 1){
 					int xnew7 = x + 2;
 					int ynew7 = y - 1;
 					if (b[xnew7][ynew7] != 1){
-						moves.add(xnew7);
-						moves.add(ynew7);
+						moves2.add(xnew7);
+						moves2.add(ynew7);
 					}
 				}
 				if(x <7  && y >= 2){
 					int xnew8 = x + 1;
 					int ynew8 = y - 2;
 					if (b[xnew8][ynew8] != 1){
-						moves.add(xnew8);
-						moves.add(ynew8);
+						moves2.add(xnew8);
+						moves2.add(ynew8);
 					}
 				}
 
@@ -220,7 +223,7 @@ public class Board {
 			}
 
 		}
-		return moves;
+		return moves2;
 
 	}
 
@@ -231,9 +234,10 @@ public class Board {
 	}
 	
 	public static int [][] Moving2(int [][] b,int x, int y, int newx, int newy){
-		b[newx][newy] = b[x][y];
-		b[x][y] = 0;
-		return b;
+		int [][] temp = b;
+		temp[newx][newy] = temp[x][y];
+		temp[x][y] = 0;
+		return temp;
 
 	}
 	//if ()
@@ -259,5 +263,15 @@ public class Board {
 
 		return allmoves;
 	}
-
+	
+	public int [][] clone(int [][] b){
+		int [][] clone = new int[b.length][b.length];
+		for(int i = 0; i < b.length; i++){
+			for(int j = 0 ; j < b.length; j ++){
+				clone [i][j] = b [i][j];
+			}
+		}
+		return clone;
+	}
+	
 }

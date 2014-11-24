@@ -140,7 +140,6 @@ public class Board {
 	}
 
 	public static ArrayList<Integer> Move2 (int b [][], int x, int y){
-		System.out.println("Compute moves");
 		moves2.clear();
 		if(player == 2){
 			if (b[x][y] == 2){

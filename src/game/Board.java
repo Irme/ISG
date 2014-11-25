@@ -10,8 +10,6 @@ public class Board {
 	ArrayList<Integer> 	moves2 = new ArrayList<Integer>();
 	public static int player = 1;
 	static int  coor [] = new int [2];
-	static boolean firstClick = false;
-	static boolean secondClick = false;
 	public Board(){
 		//TODO : constructor
 		board = new int [sizey][sizex];
@@ -239,7 +237,6 @@ public class Board {
 		return temp;
 
 	}
-	//if ()
 	public ArrayList<Integer> getAllMoves(int b [][],int pl){
 		ArrayList<Integer> allmoves = new ArrayList<Integer>();
 

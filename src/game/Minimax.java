@@ -20,11 +20,9 @@ public class Minimax {
 		
 		
 		if (max){ //Maximising player
-			System.out.println("Max");
 			if(node.getScore() == -10){
 				bestValue = Integer.MIN_VALUE;
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
-					System.out.println("One ply deeper");
 					bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
 					Node<Integer> n = new Node<Integer>(bo);
 					node.addChild(n);
@@ -35,6 +33,7 @@ public class Minimax {
 						vm.setMoveY(node.getMoves().get(i+1));
 						vm.setNewMoveX(node.getMoves().get(i+2));
 						vm.setNewMoveY(node.getMoves().get(i+3));
+						vm.setScore(bestValue);
 					}
 				}
 				node.setValmov(vm);
@@ -51,13 +50,14 @@ public class Minimax {
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
 					Node<Integer> n = new Node<Integer>();
 					n.setState(Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3)));
-					int temp2 = minimax(false,n, depth-1,pla%2+1).getScore();
+					int temp2 = minimax(true,n, depth-1,pla%2+1).getScore();
 					if(temp2 < bestValue){
 						bestValue = temp2;
 						vm.setMoveX(node.getMoves().get(i));
 						vm.setMoveY(node.getMoves().get(i+1));
 						vm.setNewMoveX(node.getMoves().get(i+2));
 						vm.setNewMoveY(node.getMoves().get(i+3));
+						vm.setScore(bestValue);
 					}
 
 				}

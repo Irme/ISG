@@ -16,14 +16,15 @@ public class Minimax {
 		}
 		int [][] bo = new int [8][8];
 		node.setMoves(b.getAllMoves(node.getState(), pla));
-		ValMove vm = new ValMove();
+		
 		
 		
 		if (max){ //Maximising player
 			if(node.getScore() == -10){
 				bestValue = Integer.MIN_VALUE;
+				ValMove vm = new ValMove();
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
-					bo = Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
+					bo = Board.Moving2(node.getState().clone(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3));
 					Node<Integer> n = new Node<Integer>(bo);
 					node.addChild(n);
 					int temp2 = minimax(false,n, depth-1, pla%2+1).getScore();
@@ -34,9 +35,10 @@ public class Minimax {
 						vm.setNewMoveX(node.getMoves().get(i+2));
 						vm.setNewMoveY(node.getMoves().get(i+3));
 						vm.setScore(bestValue);
+						node.setValmov(vm);
 					}
 				}
-				node.setValmov(vm);
+				
 				return node.getValmov();
 			}
 			else {
@@ -47,9 +49,10 @@ public class Minimax {
 		}else{ //minimising player
 			if(node.getScore() == -10){
 				bestValue = Integer.MAX_VALUE;
+				ValMove vm = new ValMove();
 				for(int i = 0; i < node.getMoves().size(); i = i + 4){
 					Node<Integer> n = new Node<Integer>();
-					n.setState(Board.Moving2(node.getState(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3)));
+					n.setState(Board.Moving2(node.getState().clone(), node.getMoves().get(i), node.getMoves().get(i+1), node.getMoves().get(i+2), node.getMoves().get(i+3)));
 					int temp2 = minimax(true,n, depth-1,pla%2+1).getScore();
 					if(temp2 < bestValue){
 						bestValue = temp2;
@@ -58,10 +61,10 @@ public class Minimax {
 						vm.setNewMoveX(node.getMoves().get(i+2));
 						vm.setNewMoveY(node.getMoves().get(i+3));
 						vm.setScore(bestValue);
+						node.setValmov(vm);
 					}
 
 				}
-				node.setValmov(vm);
 				return node.getValmov();
 			}
 			else {
@@ -78,33 +81,35 @@ public class Minimax {
 		int countOp = 0;
 		int eval = 0;
 		ArrayList<Integer> m = new ArrayList<Integer>();
+		m = b.getAllMoves(board, pl);
 		for(int k = 0; k < m.size(); k = k + 4){
 			if(board[m.get(k+2)][m.get(k+3)] == pl%2+1 ){
+				System.out.println("Possible capture");
 				//Possible capture
 				eval = eval + 4;
 			}
 		}
-		m = b.getAllMoves(board, pl);
-		for (int i = 0; i< 8 ; i ++){
-			for(int j = 0; j < 8; j++){
-				if(board[i][j] == pl){
-					countOwn++;
-				}
-				if (board[i][j] == (pl%2+1)){
-					
-					countOp++;
-				}
-
-			}
-
-		}
-		eval = eval + countOwn*2 + (16-countOp);
+		
+//		for (int i = 0; i< 8 ; i ++){
+//			for(int j = 0; j < 8; j++){
+//				if(board[i][j] == pl){
+//					countOwn++;
+//				}
+//				if (board[i][j] == (pl%2+1)){
+//					
+//					countOp++;
+//				}
+//
+//			}
+//
+//		}
+//		eval = eval + countOwn*2 + (16-countOp);
 		//Count possible moves
 
 		//Count opponent's possible moves
 
 
-
+		System.out.println("Current f(state): " + eval);
 		return eval;
 	}
 }

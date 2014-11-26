@@ -137,9 +137,9 @@ public class Board {
 
 	}
 
-	public  ArrayList<Integer> Move2 (int b [][], int x, int y){
+	public  ArrayList<Integer> Move2 (int b [][], int x, int y, int pl){
 		moves2.clear();
-		if(player == 2){
+		if(pl == 2){
 			if (b[x][y] == 2){
 				if(x >= 2 && y < 7){
 					int xnew1 = x - 2;
@@ -180,7 +180,7 @@ public class Board {
 
 			}
 
-		} else if (player == 1){ //player == 1
+		} else if (pl == 1){ //player == 1
 			if (b[x][y] == 1){
 				if(x >= 2 && y >= 1){
 					int xnew5 = x - 2;
@@ -244,7 +244,7 @@ public class Board {
 			for (int j = 0; j < b.length; j ++){
 				if(b[i][j] == pl){
 					ArrayList<Integer> temp = new ArrayList<Integer>();
-					temp = Move2(b,i, j);
+					temp = Move2(b,i, j, pl);
 					for (int k = 0; k < temp.size();k = k+2 ){
 						allmoves.add(i);
 						allmoves.add(j);

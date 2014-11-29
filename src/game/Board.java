@@ -231,7 +231,7 @@ public class Board {
 	}
 	
 	public static int [][] Moving2(int [][] b,int x, int y, int newx, int newy){
-		int [][] temp = b;
+		int [][] temp  = clone(b);
 		temp[newx][newy] = temp[x][y];
 		temp[x][y] = 0;
 		return temp;
@@ -260,7 +260,7 @@ public class Board {
 		return allmoves;
 	}
 	
-	public int [][] clone(int [][] b){
+	public static int [][] clone(int [][] b){
 		int [][] clone = new int[b.length][b.length];
 		for(int i = 0; i < b.length; i++){
 			for(int j = 0 ; j < b.length; j ++){

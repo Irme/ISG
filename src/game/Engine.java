@@ -1,10 +1,11 @@
 package game;
 
-import game.Tree.Node;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.sun.swing.internal.plaf.metal.resources.metal;
 
 public class Engine {
 
@@ -12,13 +13,13 @@ public class Engine {
 	 * @param args
 	 * @throws InterruptedException 
 	 */
+	Minimax m = new Minimax();
 	public void engine() throws IOException, InterruptedException{
 		Scanner in = new Scanner(System.in);
 		GameFrame frame = new GameFrame();
 		frame.setAlwaysOnTop( true );
 		Board board = new Board();
 		boolean validselec = false;
-		Minimax mini = new Minimax();
 
 
 
@@ -58,11 +59,8 @@ public class Engine {
 				//ArrayList<Integer> temp3 = Board.getAllMoves(Board.board);
 				//System.out.println(temp3.size());
 				int [] temp = new int [4];
-				Node<Integer> root = new Node<Integer>();
 				int [][] state = board.clone(Board.board);
-				root.setState(state);
-				ValMove temp2 = mini.minimax(true, root, 3, Board.player);
-				temp = temp2.getMove();
+				temp = m.MinimaxDecision(false,state, Board.player, 2);
 				System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 				Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 			}

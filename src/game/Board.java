@@ -29,7 +29,7 @@ public class Board {
 
 
 	//Return who is finished, zero otherwise
-	public static int isFinished(){
+	public static int isFinished(int [][] board){
 		if(board [0][0] == 1 || board [1][0] == 1|| board [2][0] == 1 || board [3][0] == 1|| board [4][0] == 1|| board [5][0] == 1|| board [6][0] == 1|| board [7][0] == 1 ){
 			return 2;
 		}else if ( board [0][7] == 2 || board [1][7] ==  2 || board [2][7] == 2 || board [3][7] == 2 || board [4][7] == 2 || board [5][7] == 2 || board [6][7] == 2 || board [7][7] == 2){

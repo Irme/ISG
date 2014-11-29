@@ -24,7 +24,7 @@ public class Engine {
 
 
 
-		while(board.isFinished() == 0){
+		while(board.isFinished(Board.board) == 0){
 			boolean validmove = false;
 			int xtemp = 0;
 			int ytemp = 0;
@@ -60,7 +60,7 @@ public class Engine {
 				//System.out.println(temp3.size());
 				int [] temp = new int [4];
 				int [][] state = board.clone(Board.board);
-				temp = m.MinimaxDecision(false,state, Board.player, 2);
+				temp = m.MinimaxDecision(true,state, Board.player, 4);
 				System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 				Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 			}

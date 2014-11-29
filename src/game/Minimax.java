@@ -58,7 +58,8 @@ public class Minimax {
 		//				eval = eval + 4;
 		//			}
 		//		}
-
+		if(b.isFinished(board)  == pl)
+			eval = eval + 100;
 		for (int i = 0; i< 8 ; i ++){
 			for(int j = 0; j < 8; j++){
 				if(board[i][j] == pl){
@@ -78,7 +79,7 @@ public class Minimax {
 		//Count opponent's possible moves
 
 
-		System.out.println("Current f(state): " + eval);
+		//System.out.println("Current f(state): " + eval);
 		return eval;
 	}
 

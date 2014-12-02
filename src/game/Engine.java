@@ -14,6 +14,7 @@ public class Engine {
 	 * @throws InterruptedException 
 	 */
 	Minimax m = new Minimax();
+	AlphaBeta ab = new AlphaBeta();
 	boolean Player1Human;
 	boolean Player2Human;
 
@@ -116,7 +117,8 @@ public class Engine {
 				}else {
 					int [] temp = new int [4];
 					int [][] state = board.clone(Board.board);
-					temp = m.MinimaxDecision(true,state, Board.player, 4);
+					temp = ab.AlphaBetaSearch(true, state, Board.player, 5);
+					//temp = m.MinimaxDecision(true,state, Board.player, 4);
 					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}

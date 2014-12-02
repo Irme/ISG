@@ -13,6 +13,8 @@ public class Minimax {
 		int score = Integer.MIN_VALUE;
 		if(depth == 0){
 			return eval.evaluate(state, player);
+		} else if (b.isFinished(state) == player){
+			return eval.evaluate(state, player);
 		}
 		else{
 			ArrayList<Integer> moves = new ArrayList<Integer>();
@@ -29,6 +31,8 @@ public class Minimax {
 	public int MinValue(int [][] state, int player, int depth){
 		int score = Integer.MAX_VALUE;
 		if (depth == 0){
+			return eval.evaluate(state, player);
+		} else if (b.isFinished(state) == player){
 			return eval.evaluate(state, player);
 		}
 		else{

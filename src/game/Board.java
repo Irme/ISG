@@ -40,6 +40,18 @@ public class Board {
 
 	}
 
+	public static int isAlmostFinished(int [][] board){
+		if(board [0][1] == 1 || board [1][1] == 1|| board [2][1] == 1 || board [3][1] == 1|| board [4][1] == 1|| board [5][1] == 1|| board [6][1] == 1|| board [7][1] == 1 ){
+			return 2;
+		}else if ( board [0][6] == 2 || board [1][6] ==  2 || board [2][6] == 2 || board [3][6] == 2 || board [4][6] == 2 || board [5][6] == 2 || board [6][6] == 2 || board [7][6] == 2){
+			return 1;
+		} else {
+			return 0;
+		}
+
+	}
+
+
 	public static void printBoard(int [][] b){
 		for(int i = 0; i < sizey; i++){
 			for(int j = 0; j < sizex; j++ ){
@@ -133,7 +145,7 @@ public class Board {
 			}
 
 		}
-		
+
 
 	}
 
@@ -229,7 +241,7 @@ public class Board {
 		board[x][y] = 0;
 
 	}
-	
+
 	public static int [][] Moving2(int [][] b,int x, int y, int newx, int newy){
 		int [][] temp  = clone(b);
 		temp[newx][newy] = temp[x][y];
@@ -254,12 +266,12 @@ public class Board {
 				}
 			}
 		}
-		
+
 
 
 		return allmoves;
 	}
-	
+
 	public static int [][] clone(int [][] b){
 		int [][] clone = new int[b.length][b.length];
 		for(int i = 0; i < b.length; i++){
@@ -269,5 +281,61 @@ public class Board {
 		}
 		return clone;
 	}
-	
+
+	/*Orders the moves.
+	 * Moves that lead to winning postions or caputres will be checked first.
+	 * 
+	 */
+	public ArrayList<Integer> moveOrdering(int [][] board, int player, ArrayList<Integer> moves){
+		ArrayList<Integer> sorted = new ArrayList<Integer>();
+		ArrayList<Integer> dontcareabouthese = new ArrayList<Integer>();
+
+		if(player == 1){
+			for (int i = 0; i < moves.size(); i = i +4){
+				if(moves.get(i+3) == 0){
+					sorted.add(moves.get(i));
+					sorted.add(moves.get(i+1));
+					sorted.add(moves.get(i+2));
+					sorted.add(moves.get(i+3));
+			
+				} else if(board[moves.get(i+2)][moves.get(i+3)] == 2){//Capture
+					sorted.add(moves.get(i));
+					sorted.add(moves.get(i+1));
+					sorted.add(moves.get(i+2));
+					sorted.add(moves.get(i+3));
+				} else{
+					dontcareabouthese.add(moves.get(i));
+					dontcareabouthese.add(moves.get(i+1));
+					dontcareabouthese.add(moves.get(i+2));
+					dontcareabouthese.add(moves.get(i+3));
+				}
+			}
+		} else {
+			for (int i = 0; i < moves.size(); i = i +4){
+				if(moves.get(i+3) == 7){
+					sorted.add(moves.get(i));
+					sorted.add(moves.get(i+1));
+					sorted.add(moves.get(i+2));
+					sorted.add(moves.get(i+3));
+			
+				} else if(board[moves.get(i+2)][moves.get(i+3)] == 1){//Capture
+					sorted.add(moves.get(i));
+					sorted.add(moves.get(i+1));
+					sorted.add(moves.get(i+2));
+					sorted.add(moves.get(i+3));
+				} else{
+					dontcareabouthese.add(moves.get(i));
+					dontcareabouthese.add(moves.get(i+1));
+					dontcareabouthese.add(moves.get(i+2));
+					dontcareabouthese.add(moves.get(i+3));
+				}
+				
+			}
+
+		}
+		sorted.addAll(dontcareabouthese);
+		return sorted;
+
+	}
+
 }

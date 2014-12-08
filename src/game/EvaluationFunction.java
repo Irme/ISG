@@ -14,7 +14,7 @@ public class EvaluationFunction {
 		//			if(b.isFinished(board)  == pl%2+1)
 		//				eval = eval - 100;
 		if(b.isAlmostFinished(board)== pl){
-			eval = eval + 30;
+			eval = eval + 300;
 		}
 		for (int i = 0; i< 8 ; i ++){
 			for(int j = 0; j < 8; j++){

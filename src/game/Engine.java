@@ -38,7 +38,7 @@ public class Engine {
 		frame.setAlwaysOnTop( true );
 		Board board = new Board();
 		boolean validselec = false;
-
+		board.init();
 
 
 

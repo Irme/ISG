@@ -3,7 +3,6 @@ package game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Arrays;
 
 
 
@@ -12,12 +11,25 @@ public class AlphaBeta {
 	Board b = new Board();
 	EvaluationFunction eval = new EvaluationFunction();
 	Map<String, Integer> statesmap = new HashMap<>();
+	boolean foundOwnWin = false;
 
 	public int ABMaxValue(int board [][], int alpha, int beta, int player, int depth){
 		int score = Integer.MIN_VALUE;
-		if(depth == 0){
-			return eval.evaluate(board, player);
-		} else if (b.isFinished(board) == player){
+		if (Board.isFinished(board) == player){
+			if(player == Board.player){
+				foundOwnWin = true;
+				return eval.evaluate(board, player)+depth;
+			}
+			//			System.out.println("Deceted win for " + player);
+			return eval.evaluate(board, player)-depth;
+		} else if (Board.isFinished(board) == player%2+1){
+			if(player != Board.player){
+				foundOwnWin = true;
+				return eval.evaluate(board, player)+depth;
+			}
+			//System.out.println("Deceted win for " + player%2+1);
+			return eval.evaluate(board, player)-depth;
+		} else if (depth == 0){
 			return eval.evaluate(board, player);
 		}
 		else{
@@ -26,13 +38,13 @@ public class AlphaBeta {
 			moves = b.getAllMoves(board, player);
 			for(int i = 0; i < moves.size(); i = i + 4){
 				int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
-				if(statesmap.containsKey(toString(newstate))){
-					score = statesmap.get(toString(newstate));
-					//System.out.println("Found something");
-				} else {
-					score = Math.max(score, ABMinValue(newstate,alpha, beta, player%2+1, depth-1));
-					statesmap.put(toString(newstate), score);
-				}
+				//				if(statesmap.containsKey(toString(newstate))){
+				//					score = statesmap.get(toString(newstate));
+				//					//System.out.println("Found something");
+				//				} else {
+				score = Math.max(score, ABMinValue(newstate,alpha, beta, player%2+1, depth-1));
+				//	statesmap.put(toString(newstate), score);
+				//}
 				if(score >= beta){
 					//System.out.println("Cut off");
 					return score;
@@ -48,9 +60,20 @@ public class AlphaBeta {
 
 	public int ABMinValue(int [][] board,int alpha, int beta, int player, int depth){
 		int score = Integer.MAX_VALUE;
-		if (depth == 0){
-			return eval.evaluate(board, player);
-		} else if (b.isFinished(board) == player){
+		if (Board.isFinished(board) == player){
+			if(player == Board.player){
+				foundOwnWin = true;
+				return eval.evaluate(board, player)+depth;
+			}
+			return eval.evaluate(board, player)-depth;
+		} else if (Board.isFinished(board) == player%2+1){
+			if(player != Board.player){
+				foundOwnWin = true;
+				return eval.evaluate(board, player)-depth;
+			}
+			//System.out.println("Detedted opponent win");
+			return eval.evaluate(board, player)+depth;
+		} else if (depth == 0){
 			return eval.evaluate(board, player);
 		}
 		else{
@@ -59,13 +82,13 @@ public class AlphaBeta {
 			moves = b.getAllMoves(board, player);
 			for(int i = 0; i < moves.size(); i = i + 4){
 				int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
-				if (statesmap.containsKey(toString(newstate))) {
-					score=statesmap.get(toString(newstate));
-					//System.out.println("Found something");
-				} else{
-					score = Math.min(score, ABMaxValue(newstate,alpha, beta, player%2+1, depth-1));
-					statesmap.put(toString(newstate), score);
-				}
+				//				if (statesmap.containsKey(toString(newstate))) {
+				//					score=statesmap.get(toString(newstate));
+				//					//System.out.println("Found something");
+				//				} else{
+				score = Math.min(score, ABMaxValue(newstate,alpha, beta, player%2+1, depth-1));
+				//statesmap.put(toString(newstate), score);
+				//}
 				if(score <= alpha){
 					//System.out.println("Cut-off");
 					return score;
@@ -83,64 +106,70 @@ public class AlphaBeta {
 
 
 	public int[] AlphaBetaSearch(boolean max,int board [][], int currentPlayer, int depth) {
-		int alpha = Integer.MIN_VALUE;
-		int beta = Integer.MAX_VALUE;
 		int [] nextMove = new int [4];
-		if (max){
-			int score = Integer.MIN_VALUE;
-			ArrayList<Integer> moves = new ArrayList<Integer>();
-			moves = b.moveOrdering(board, currentPlayer, moves);
-			moves = b.getAllMoves(board, currentPlayer);
-			for(int i = 0; i < moves.size(); i = i + 4){
-				int value;
-				int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
-				String temp = toString(newstate);
-				if(statesmap.containsKey(temp)){
-					value = statesmap.get(toString(newstate));
-					//System.out.println("Found something");
+		if(!foundOwnWin){
+			for(int d = 1; d <= depth;d ++){
+				System.out.println("Current depth " + d);
+				int alpha = Integer.MIN_VALUE;
+				int beta = Integer.MAX_VALUE;
+				if (max){
+					int score = Integer.MIN_VALUE;
+					ArrayList<Integer> moves = new ArrayList<Integer>();
+					moves = b.moveOrdering(board, currentPlayer, moves);
+					moves = b.getAllMoves(board, currentPlayer);
+					for(int i = 0; i < moves.size(); i = i + 4){
+						int value;
+						int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
+						//String temp = toString(newstate);
+						//					if(statesmap.containsKey(temp)){
+						//						value = statesmap.get(toString(newstate));
+						//						//System.out.println("Found something");
+						//
+						//					} else {
+						value = ABMinValue(newstate,alpha, beta, currentPlayer%2+1, depth-1);
+						//						statesmap.put(toString(newstate), value);
+						//					}
+						//value = ABMinValue(newstate,alpha, beta, currentPlayer%2+1, depth-1);
 
+						if( value > score){
+							score = value;
+							nextMove [0] = moves.get(i);
+							nextMove [1] = moves.get(i+1);
+							nextMove [2] = moves.get(i+2);
+							nextMove [3] = moves.get(i+3);
+						}
+					}
 				} else {
-					value = ABMinValue(newstate,alpha, beta, currentPlayer%2+1, depth-1);
-					statesmap.put(toString(newstate), value);
-				}
-				//value = ABMinValue(newstate,alpha, beta, currentPlayer%2+1, depth-1);
+					int score = Integer.MAX_VALUE;
+					ArrayList<Integer> moves = new ArrayList<Integer>();
+					moves = b.getAllMoves(board, currentPlayer);
+					moves = b.moveOrdering(board, currentPlayer, moves);
+					for(int i = 0; i < moves.size(); i = i + 4){
+						int value;
+						int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
+						//					if(statesmap.containsKey(toString(newstate))){
+						//						value = statesmap.get(newstate);
+						//System.out.println("Found something");
 
-				if( value > score){
-					score = value;
-					nextMove [0] = moves.get(i);
-					nextMove [1] = moves.get(i+1);
-					nextMove [2] = moves.get(i+2);
-					nextMove [3] = moves.get(i+3);
+						//					} else{
+						value = ABMaxValue(newstate,alpha,beta, currentPlayer%2+1, depth-1);
+						//						statesmap.put(toString(newstate), value);
+						//					}
+						if( value < score){
+							score = value;
+							nextMove [0] = moves.get(i);
+							nextMove [1] = moves.get(i+1);
+							nextMove [2] = moves.get(i+2);
+							nextMove [3] = moves.get(i+3);
+						}			
+					}
 				}
-			}
-		} else {
-			int score = Integer.MAX_VALUE;
-			ArrayList<Integer> moves = new ArrayList<Integer>();
-			moves = b.getAllMoves(board, currentPlayer);
-			moves = b.moveOrdering(board, currentPlayer, moves);
-			for(int i = 0; i < moves.size(); i = i + 4){
-				int value;
-				int [][] newstate = Board.Moving2(board, moves.get(i), moves.get(i+1), moves.get(i+2), moves.get(i+3));
-				if(statesmap.containsKey(toString(newstate))){
-					value = statesmap.get(newstate);
-					//System.out.println("Found something");
-
-				} else{
-					value = ABMaxValue(newstate,alpha,beta, currentPlayer%2+1, depth-1);
-					statesmap.put(toString(newstate), value);
-				}
-				if( value < score){
-					score = value;
-					nextMove [0] = moves.get(i);
-					nextMove [1] = moves.get(i+1);
-					nextMove [2] = moves.get(i+2);
-					nextMove [3] = moves.get(i+3);
-				}			
 			}
 		}
+		System.out.println("Moving from " +nextMove[0]+ "," +nextMove[1]+ " to " +nextMove[2]+ "," + +nextMove[3] );
 		return nextMove;
-
 	}
+
 
 
 	public String toString(int b [][]){

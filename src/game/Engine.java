@@ -2,10 +2,8 @@ package game;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.sun.swing.internal.plaf.metal.resources.metal;
 
 public class Engine {
 
@@ -17,6 +15,7 @@ public class Engine {
 	AlphaBeta ab = new AlphaBeta();
 	boolean Player1Human;
 	boolean Player2Human;
+	int[][] previousBoard = new int [8][8];
 
 	public void engine() throws IOException, InterruptedException{
 		Scanner in = new Scanner(System.in);
@@ -38,11 +37,11 @@ public class Engine {
 		frame.setAlwaysOnTop( true );
 		Board board = new Board();
 		boolean validselec = false;
+		board.init();
 
 
 
-
-		while(board.isFinished(Board.board) == 0){
+		while(Board.isFinished(Board.board) == 0){
 			boolean validmove = false;
 			int xtemp = 0;
 			int ytemp = 0;
@@ -78,9 +77,16 @@ public class Engine {
 					validmove = false;
 				} else {
 					int [] temp = new int [4];
+<<<<<<< HEAD
 					int [][] state = board.clone(Board.board);
 					temp = ab.AlphaBetaSearch(true, state, Board.player, 5);
 					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+=======
+					int [][] state = Board.clone(Board.board);
+					//temp = m.MinimaxDecision(true,state, 1, 3);
+					temp = ab.AlphaBetaSearch(true, state, 1, 4);
+					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+>>>>>>> 5392cd3ffb3a2a0cb0ac0e40352d4d220ab47fc6
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}
 
@@ -116,10 +122,17 @@ public class Engine {
 					validmove = false;
 				}else {
 					int [] temp = new int [4];
+<<<<<<< HEAD
 					int [][] state = board.clone(Board.board);
 					
 					temp = m.MinimaxDecision(true,state, Board.player, 4);
 					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+=======
+					int [][] state = Board.clone(Board.board);
+					temp = ab.AlphaBetaSearch(true, state, 2, 4);
+					//temp = m.MinimaxDecision(true,state, 2, 4);
+					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+>>>>>>> 5392cd3ffb3a2a0cb0ac0e40352d4d220ab47fc6
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}
 			}
@@ -127,6 +140,8 @@ public class Engine {
 			Board.printBoard(Board.board);
 			Board.player = (Board.player%2+1);
 			frame.repaint();
+			previousBoard = Board.clone(Board.board);
+			
 		}
 		System.out.println("Game over");
 		in.close();

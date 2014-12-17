@@ -33,13 +33,15 @@ public class Engine {
 		} else {
 			Player2Human = true;
 		}
+		long time = System.currentTimeMillis();
+		System.out.println(time);
 		GameFrame frame = new GameFrame();
 		frame.setAlwaysOnTop( true );
 		Board board = new Board();
 		boolean validselec = false;
 		board.init();
 
-
+		
 
 		while(Board.isFinished(Board.board) == 0){
 			boolean validmove = false;
@@ -77,16 +79,11 @@ public class Engine {
 					validmove = false;
 				} else {
 					int [] temp = new int [4];
-<<<<<<< HEAD
+
 					int [][] state = board.clone(Board.board);
-					temp = ab.AlphaBetaSearch(true, state, Board.player, 5);
-					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
-=======
-					int [][] state = Board.clone(Board.board);
-					//temp = m.MinimaxDecision(true,state, 1, 3);
-					temp = ab.AlphaBetaSearch(true, state, 1, 4);
+					//System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+					temp = ab.AlphaBetaSearch(true, state, Board.player, 7);
 					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
->>>>>>> 5392cd3ffb3a2a0cb0ac0e40352d4d220ab47fc6
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}
 
@@ -122,17 +119,12 @@ public class Engine {
 					validmove = false;
 				}else {
 					int [] temp = new int [4];
-<<<<<<< HEAD
-					int [][] state = board.clone(Board.board);
-					
-					temp = m.MinimaxDecision(true,state, Board.player, 4);
-					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
-=======
 					int [][] state = Board.clone(Board.board);
-					temp = ab.AlphaBetaSearch(true, state, 2, 4);
+					//temp = m.MinimaxDecision(true,state, Board.player, 7);
+					//System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+					temp = ab.AlphaBetaSearch(true, state, Board.player, 7);
 					//temp = m.MinimaxDecision(true,state, 2, 4);
 					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
->>>>>>> 5392cd3ffb3a2a0cb0ac0e40352d4d220ab47fc6
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}
 			}
@@ -144,6 +136,7 @@ public class Engine {
 			
 		}
 		System.out.println("Game over");
+		System.out.println(System.currentTimeMillis()-time);
 		in.close();
 		// TODO Auto-generated method stub
 

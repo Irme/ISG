@@ -31,7 +31,6 @@ public class AlphaBeta {
 		}
 		else{
 			ArrayList<Integer> moves = new ArrayList<Integer>();
-
 			moves = b.getAllMoves(board, player);
 			moves = b.moveOrdering(board, player, moves);
 			for(int i = 0; i < moves.size(); i = i + 4){
@@ -75,6 +74,7 @@ public class AlphaBeta {
 		else{
 			ArrayList<Integer> moves = new ArrayList<Integer>();
 
+			
 			moves = b.getAllMoves(board, player);
 			moves = b.moveOrdering(board, player, moves);
 			for(int i = 0; i < moves.size(); i = i + 4){
@@ -104,11 +104,8 @@ public class AlphaBeta {
 
 	public int[] AlphaBetaSearch(boolean max,int board [][], int currentPlayer, int depth) {
 		int [] nextMove = new int [4];
-		int d2= depth;
-		for (int k = 1; k < d2; k++){
 		
 
-			System.out.println("Current depth " + k);
 			int alpha = Integer.MIN_VALUE;
 			int beta = Integer.MAX_VALUE;
 			if (max){
@@ -163,9 +160,8 @@ public class AlphaBeta {
 					}			
 				}
 			}
-		}
 		
-
+		
 		System.out.println("Moving from " +nextMove[0]+ "," +nextMove[1]+ " to " +nextMove[2]+ "," + +nextMove[3] );
 		return nextMove;
 	}

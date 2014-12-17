@@ -82,7 +82,10 @@ public class Engine {
 
 					int [][] state = board.clone(Board.board);
 					//System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
-					temp = ab.AlphaBetaSearch(true, state, Board.player, 7);
+					temp = ab.AlphaBetaSearch(true, state, Board.player, 6);
+					System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
+					//temp = m.MinimaxDecision(true,state, 1, 3);
+					//temp = ab.AlphaBetaSearch(true, state, 1, 4);
 					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);
 				}
@@ -122,7 +125,8 @@ public class Engine {
 					int [][] state = Board.clone(Board.board);
 					//temp = m.MinimaxDecision(true,state, Board.player, 7);
 					//System.out.println("Moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
-					temp = ab.AlphaBetaSearch(true, state, Board.player, 7);
+					temp = ab.AlphaBetaSearch(true, state, Board.player, 6);
+					//temp = m.MinimaxDecision(true,state, Board.player, 6);
 					//temp = m.MinimaxDecision(true,state, 2, 4);
 					System.out.println("Player "+ Board.player+" moving from " + temp[0]  +","  +temp[1] + " to " + temp[2] + "," + temp[3]);
 					Board.Moving(temp[0], temp[1], temp[2], temp[3]);

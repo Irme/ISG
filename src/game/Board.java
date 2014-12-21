@@ -26,6 +26,8 @@ public class Board{
 				}
 			}
 		}
+		
+
 	}
 	//Return who is finished, zero otherwise
 	public static int isFinished(int [][] board){
@@ -337,6 +339,28 @@ public class Board{
 		}
 		return clone;
 	}
+	
+	public int [] getWinningMove(int player, int [][] state){
+		ArrayList<Integer> m = new ArrayList<Integer>();
+		m = getAllMoves(state, player);
+		if (player == 1){
+			for (int i = 0; i < m.size(); i = i +4){
+				if(m.get(i+3) == 0){
+					int t [] = {m.get(i),m.get(i+1),m.get(i+2),m.get(i+3)};
+					return t;
+				}
+			}
+		}else {
+			for (int i = 0; i < m.size(); i = i +4){
+				if(m.get(i+3) == 7){
+					int t [] = {m.get(i),m.get(i+1),m.get(i+2),m.get(i+3)};
+					return t;
+				}
+			}
+		}
+		return null;
+	}
+	
 
 	
 

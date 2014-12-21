@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -33,10 +34,10 @@ public class GameFrame extends JFrame {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);     // paint parent's background
-			int FX = 121;
+			int FX = 88;
 			int FY = 71;
 
-
+			
 			BufferedImage chessboard;
 			try {
 				chessboard = ImageIO.read(new File("chessboard.png"));
@@ -77,6 +78,7 @@ public class GameFrame extends JFrame {
 		canvas.setBorder(new EmptyBorder(5, 5, 5, 5));
 		canvas.setLayout(new BorderLayout(0, 0));
 		setContentPane(canvas);
+		canvas.setBackground(Color.WHITE);
 		setVisible(true);
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
